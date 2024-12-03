@@ -6,7 +6,6 @@ public abstract class BaseTile
     private string objectPath;
     private BaseCreature creature = null;
     private bool seen = false;
-    private bool lastSeen = false;
     public BaseTile(string texture)
     {
         objectPath = texture;
@@ -18,14 +17,6 @@ public abstract class BaseTile
     public void SetSeen(bool seen)
     {
         this.seen = seen;
-    }
-    public bool IsLastSeen()
-    {
-        return lastSeen;
-    }
-    public void SetLastSeen(bool lastSeen)
-    {
-        this.lastSeen = lastSeen;
     }
     public GameObject CreateObject()
     {

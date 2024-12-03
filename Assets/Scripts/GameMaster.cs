@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameMaster : MonoBehaviour
@@ -18,7 +19,6 @@ public class GameMaster : MonoBehaviour
         SpawnCreature(new EnemyCreature("Wolf"), 2, 2);
         drawler.SetDrawDist(heroControler.getDrawDistance());
         drawler.Draw();
-
     }
 
     // Update is called once per frame
