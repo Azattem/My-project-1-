@@ -104,11 +104,6 @@ public class MapDrawler : MonoBehaviour
                     }
 
                 }
-                else
-                {
-                    drawDistanceMap[x, y] = new NothingTile();
-                    drawDistanceMap[x, y].SetSeen(true);
-                }
                 x++;
             }
             x = 0;
