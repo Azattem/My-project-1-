@@ -16,7 +16,7 @@ public class GameMaster : MonoBehaviour
         drawler.SetMaster(this);
         SpawnCreature(heroControler.getHeroCreature(), 1, 1);
         SpawnCreature(new EnemyCreature("Wolf"), 2, 2);
-        drawler.SetDrawDist(heroControler.getDrawDistance());
+        drawler.SetDrawDist(3);
         drawler.Draw();
 
     }

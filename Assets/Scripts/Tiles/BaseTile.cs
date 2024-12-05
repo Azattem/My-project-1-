@@ -7,8 +7,10 @@ public abstract class BaseTile
     private BaseCreature creature = null;
     private bool seen = false;
     private bool lastSeen = false;
-    public BaseTile(string texture)
+    private string id = "0";
+    public BaseTile(string id,string texture)
     {
+        this.id = id;
         objectPath = texture;
     }
     public bool IsSeen()

@@ -1,7 +1,7 @@
 public class NoVisionTile : BaseTile
 {
 
-    public NoVisionTile() : base("NoVision")
+    public NoVisionTile() : base("", "NoVision")
     {
 
     }
