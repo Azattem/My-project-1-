@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public static class DebugTooles
+public static class DBT
 {
     public static void SoutMassive(System.Object[,] massive) {
         string Log = "";
@@ -14,10 +14,13 @@ public static class DebugTooles
                     }
                 }
                 Log += "\n";
-            }
+            }   
             Debug.Log(Log);
         }else {
             Debug.Log("NULL");
         }
+    }
+    public static void log(string log) {
+        Debug.Log(log);
     }
 }

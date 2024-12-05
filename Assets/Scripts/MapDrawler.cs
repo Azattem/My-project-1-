@@ -22,7 +22,8 @@ public class MapDrawler : MonoBehaviour
     public void SetDrawDist(int drawDistance)
     {
         this.drawDistance = drawDistance;
-        drawDistanceMap = new BaseTile[(drawDistance + memLengSize) * 2 - 1, (drawDistance + memLengSize) * 2 - 1];
+        drawDistanceMap = new BaseTile[(drawDistance ) * 2 + 1, (drawDistance ) * 2 + 1];
+        //drawDistanceMap = new BaseTile[5, 5];
     }
     public void Draw()
     {
@@ -79,6 +80,7 @@ public class MapDrawler : MonoBehaviour
     //Создание карты для отрисовки на основе карты взятое у мастера
     private void PopulateDrawMap(int XS, int YS)
     {
+        
         int x = 0;
         int y = 0;
         int centre = drawDistance;
@@ -86,23 +88,20 @@ public class MapDrawler : MonoBehaviour
         {
             for (int j = YS - centre; j <= YS + centre; j++)
             {
-                if (currentMap.getTile(i, j) != null)
-                {
+                if (currentMap.getTile(i, j) != null) {
                     drawDistanceMap[x, y] = currentMap.getTile(i, j);
                     //отрисовка геометричесокго ромба
-                    if ((x >= centre - y+1 && x <= centre + y-1) && y <= centre)
-                    {
+                    if ((x >= centre - y + 1 && x <= centre + y - 1) && y <= centre) {
                         drawDistanceMap[x, y].SetSeen(true);
-                    }
-                    else if ((x >= y - centre+1&& x <= centre * 2 - (y - centre)-1) && y > centre)
-                    {
+                    } else if ((x >= y - centre + 1 && x <= centre * 2 - (y - centre) - 1) && y > centre) {
                         drawDistanceMap[x, y].SetSeen(true);
-                    }
-                    else
-                    {
+                    } else {
                         drawDistanceMap[x, y].SetSeen(false);
                     }
 
+                } 
+                else {
+                    drawDistanceMap[x, y] = null;
                 }
                 x++;
             }
@@ -113,28 +112,43 @@ public class MapDrawler : MonoBehaviour
     }
     private void PlaceObjects(int heroX, int heroY)
     {
+        int platSize = 2;
+        int negSum = drawDistanceMap.GetLength(0) / 2;
+
+        DBT.SoutMassive(drawDistanceMap);
         for (int i = 0; i < drawDistanceMap.GetLength(0); i++)
         {
             for (int j = 0; j < drawDistanceMap.GetLength(1); j++)
             {
+                int plFoX = (i - negSum + heroY) * platSize;
+                int plFoY = (j - negSum + heroX) * platSize;
+                
+                
                 if (drawDistanceMap[i, j] != null)
                 {
                     //Debug.Log(drawDistanceMap.GetLength(1) + " " + drawDistanceMap.GetLength(0));
-                    BaseTile curTile = drawDistanceMap[i, j];
+                    BaseTile curTile = drawDistanceMap[i, j];                    
                     if (!objectMap.ContainsKey(curTile))
                     {
                         GameObject tileAsset = curTile.CreateObject();
-                        tileAsset = Instantiate(tileAsset, new Vector3((i + heroY) * tileAsset.transform.localScale.x, 0, (j + heroX) * tileAsset.transform.localScale.z), Quaternion.identity);
+                        tileAsset = Instantiate(tileAsset, new Vector3(plFoX,0,plFoY), Quaternion.identity);
+                        //DBT.log(plFoY + " " + plFoX);
+                        //DBT.log("new");
+                        //DBT.log("seen" + i + " " + heroY + "*" + tileAsset.transform.localScale.x + " " + i + " " + j);
                         objectMap.Add(curTile, new List<GameObject> { tileAsset, null, null });
                         curTile.SetLastSeen(curTile.IsSeen());
                     }
                     if (curTile.IsSeen() != curTile.IsLastSeen())
                     {
+
                         //Debug.Log("s");
                         curTile.SetLastSeen(curTile.IsSeen());
                         DestroyTileAsset(curTile);
                         GameObject tileAsset = curTile.CreateObject();
-                        tileAsset = Instantiate(tileAsset, new Vector3((i + heroY) * tileAsset.transform.localScale.x, 0, (j + heroX) * tileAsset.transform.localScale.z), Quaternion.identity);
+                        //DBT.log(plFoY + " " + plFoX);
+                        //DBT.log("seen" );
+                        //DBT.log("seen" + (i + heroY) * tileAsset.transform.localScale.x);
+                        tileAsset = Instantiate(tileAsset, new Vector3(plFoX, 0, plFoY), Quaternion.identity);
                         objectMap[curTile][0] = tileAsset;
                     }
 
@@ -146,7 +160,7 @@ public class MapDrawler : MonoBehaviour
                             //Debug.Log(drawDistanceMap[i, j].getCreature().getX()+" "+ drawDistanceMap[i, j].getCreature().getY());
                             GameObject creatureAsset = curTile.GetCreature().createObject();
                             GameObject tileAsset = objectMap[curTile][0];
-                            creatureAsset = Instantiate(creatureAsset, new Vector3((i + heroY) * tileAsset.transform.localScale.x, tileAsset.transform.localScale.y / 2 + creatureAsset.transform.localScale.y / 2, (j + heroX) * tileAsset.transform.localScale.z), Quaternion.identity);
+                            creatureAsset = Instantiate(creatureAsset, new Vector3(plFoX, tileAsset.transform.localScale.y / 2 + creatureAsset.transform.localScale.y / 2, plFoY), Quaternion.identity);
                             objectMap[curTile][1] = creatureAsset;
                         }
                     }
