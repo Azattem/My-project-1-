@@ -1,7 +1,7 @@
 public class NothingTile : BaseTile
 {
 
-    public NothingTile() : base("NoThing")
+    public NothingTile() : base("", "NoThing")
     {
 
     }
