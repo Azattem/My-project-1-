@@ -7,7 +7,7 @@ public static class MapMaker
         {
             for (int j = 0; j < sizeY; j++)
             {
-                map.setTile(i, j, new BasicTile());
+                map.setTile(i, j, TileTypeManager.GetTileById(1));
             }
         }
         return map;

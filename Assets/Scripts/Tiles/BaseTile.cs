@@ -7,11 +7,15 @@ public abstract class BaseTile
     private BaseCreature creature = null;
     private bool seen = false;
     private bool lastSeen = false;
-    private string id = "0";
-    public BaseTile(string id,string texture)
+    private int id;
+    public BaseTile(int id,string texture)
     {
         this.id = id;
         objectPath = texture;
+    }
+    public BaseTile(BaseTile baseTile) {
+    this.id = baseTile.id;
+    this.objectPath = baseTile.objectPath;
     }
     public bool IsSeen()
     {
@@ -34,20 +38,15 @@ public abstract class BaseTile
         GameObject tileAsset;
         if (seen)
         {
-            tileAsset = Resources.Load(objectPath) as GameObject;
+            tileAsset = TileTypeManager.GetSpriteById(id);
         }
         else
         {
-            tileAsset = Resources.Load("NoVision") as GameObject;
+            tileAsset = TileTypeManager.GetSpriteById(0);
         } 
-        //if (tileAsset.GetComponent<TileInfo>() == null) {
-        //    tileAsset.AddComponent<TileInfo>().setInfo(objectPath, seen);
-        //}
-        
-        //Debug.Log(x+" "+ y);
         return tileAsset;
     }
-    public string GetTexture()
+    public string Getsprite()
     {
         return objectPath;
     }
@@ -63,4 +62,5 @@ public abstract class BaseTile
     {
         return this.creature != null;
     }
+    public abstract BaseTile Copy();
 }

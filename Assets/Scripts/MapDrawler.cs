@@ -108,14 +108,13 @@ public class MapDrawler : MonoBehaviour
             x = 0;
             y++;
         }
-        //DebugTooles.soutMassive(drawDistanceMap);
     }
     private void PlaceObjects(int heroX, int heroY)
     {
         int platSize = 2;
         int negSum = drawDistanceMap.GetLength(0) / 2;
 
-        DBT.SoutMassive(drawDistanceMap);
+        //DBT.SoutMassive(drawDistanceMap);
         for (int i = 0; i < drawDistanceMap.GetLength(0); i++)
         {
             for (int j = 0; j < drawDistanceMap.GetLength(1); j++)
@@ -126,29 +125,22 @@ public class MapDrawler : MonoBehaviour
                 
                 if (drawDistanceMap[i, j] != null)
                 {
-                    //Debug.Log(drawDistanceMap.GetLength(1) + " " + drawDistanceMap.GetLength(0));
                     BaseTile curTile = drawDistanceMap[i, j];                    
                     if (!objectMap.ContainsKey(curTile))
                     {
                         GameObject tileAsset = curTile.CreateObject();
                         tileAsset = Instantiate(tileAsset, new Vector3(plFoX,0,plFoY), Quaternion.identity);
-                        //DBT.log(plFoY + " " + plFoX);
-                        //DBT.log("new");
-                        //DBT.log("seen" + i + " " + heroY + "*" + tileAsset.transform.localScale.x + " " + i + " " + j);
                         objectMap.Add(curTile, new List<GameObject> { tileAsset, null, null });
                         curTile.SetLastSeen(curTile.IsSeen());
                     }
                     if (curTile.IsSeen() != curTile.IsLastSeen())
                     {
 
-                        //Debug.Log("s");
                         curTile.SetLastSeen(curTile.IsSeen());
                         DestroyTileAsset(curTile);
                         GameObject tileAsset = curTile.CreateObject();
-                        //DBT.log(plFoY + " " + plFoX);
-                        //DBT.log("seen" );
-                        //DBT.log("seen" + (i + heroY) * tileAsset.transform.localScale.x);
                         tileAsset = Instantiate(tileAsset, new Vector3(plFoX, 0, plFoY), Quaternion.identity);
+                        
                         objectMap[curTile][0] = tileAsset;
                     }
 
