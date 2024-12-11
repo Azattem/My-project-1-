@@ -1,54 +1,50 @@
 using Assets.Scripts.Tiles;
 using UnityEngine;
 
-public abstract class BaseTile
-{
+public abstract class BaseTile {
+    private int id;
+    private string name;
     private string objectPath;
     private BaseCreature creature = null;
     private bool seen = false;
     private bool lastSeen = false;
-    private int id;
-    public BaseTile(int id,string texture)
-    {
+
+    public BaseTile(int id, string name, string texture) {
         this.id = id;
         objectPath = texture;
+        this.name = name;
     }
     public BaseTile(BaseTile baseTile) {
-    this.id = baseTile.id;
-    this.objectPath = baseTile.objectPath;
+        this.name=baseTile.name;
+        this.id = baseTile.id;
+        this.objectPath = baseTile.objectPath;
     }
-    public bool IsSeen()
-    {
+    public bool IsSeen() {
         return seen;
     }
-    public void SetSeen(bool seen)
-    {
+    public void SetSeen(bool seen) {
         this.seen = seen;
     }
-    public bool IsLastSeen()
-    {
+    public bool IsLastSeen() {
         return lastSeen;
     }
-    public void SetLastSeen(bool lastSeen)
-    {
+    public void SetLastSeen(bool lastSeen) {
         this.lastSeen = lastSeen;
     }
-    public GameObject CreateObject()
-    {
+    public GameObject CreateObject() {
         GameObject tileAsset;
-        if (seen)
-        {
+        if (seen) {
             tileAsset = TileTypeManager.GetSpriteById(id);
-        }
-        else
-        {
+        } else {
             tileAsset = TileTypeManager.GetSpriteById(0);
-        } 
+        }
         return tileAsset;
     }
-    public string Getsprite()
-    {
+    public string GetSprite() {
         return objectPath;
+    }
+    public string GetName() { 
+    return name;
     }
     public BaseCreature GetCreature()
     {

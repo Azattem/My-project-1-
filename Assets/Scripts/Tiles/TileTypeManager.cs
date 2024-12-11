@@ -4,7 +4,6 @@ using UnityEngine;
 
 public static class TileTypeManager  {
     private static Dictionary<int, KeyValuePair<BaseTile, GameObject>> dataDictionary = new();
-    private static int idCounter = 0;
 
     public static BaseTile GetTileById(int id) {
 
@@ -13,12 +12,15 @@ public static class TileTypeManager  {
     public static GameObject GetSpriteById(int id) {
         return dataDictionary[id].Value;
     }
-    public static void AddTileToData(BaseTile tile) {
-        dataDictionary.Add(idCounter, new KeyValuePair<BaseTile, GameObject> (tile, Resources.Load(tile.Getsprite()) as GameObject));
-        idCounter++;
+    public static void AddTileToData(int id,BaseTile tile) {
+        dataDictionary.Add(id, new KeyValuePair<BaseTile, GameObject> (tile, Resources.Load(tile.GetSprite()) as GameObject));
     }
-    public static void GetInfoFromFile() {
-        AddTileToData(new BasicTile(0, "NoVision"));
-        AddTileToData(new BasicTile(1, "BaseTile"));
+    public static void GetInfoFromFile(string FileName) {
+        TextAsset File = (TextAsset)Resources.Load(FileName);
+        string text = File.text;
+
+        
+        AddTileToData(0,new BasicTile(0,"No Vision", "NoVision"));
+        AddTileToData(1, new BasicTile(1, "Empty Tile", "BaseTile"));
     }
 }

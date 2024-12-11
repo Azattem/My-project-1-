@@ -10,14 +10,14 @@ public class GameMaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TileTypeManager.GetInfoFromFile();
+        TileTypeManager.GetInfoFromFile("TileBaseInfo");
         this.currentMap = MapMaker.generateMap(20, 20);
         heroControler.setMaster(this);
         heroControler.setHero(new HeroCreature());
         drawler.SetMaster(this);
         SpawnCreature(heroControler.getHeroCreature(), 1, 1);
         SpawnCreature(new EnemyCreature("Wolf"), 2, 2);
-        drawler.SetDrawDist(3);
+        drawler.SetDrawDist(5);
         drawler.Draw();
 
     }
